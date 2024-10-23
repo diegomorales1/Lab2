@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package digimon;
+option go_package = "grpc-server/proto;digimon";
+
+service DigimonService {
+  // Método para enviar Digimons desde el Primary Node a los nodos regionales
+  rpc SendDigimon (Digimon) returns (Ack) {}
+  
+  // Método para notificar a los nodos regionales que el Primary Node ha terminado de enviar Digimons y enviar PS
+  rpc NotifyCompletion (CompletionInfo) returns (Ack) {}
+}
+
+service ResultService {
+  // Método para que los nodos regionales envíen los resultados de sacrificio al Primary Node
+  rpc SendSacrificioResult (SacrificioResult) returns (Ack) {}
+}
+
+message Digimon {
+  string nombre = 1;
+  string atributo = 2;
+}
+
+message Ack {
+  bool success = 1;
+  string message = 2;
+}
+
+message CompletionInfo {
+  string sacrificio_porcentaje = 1; // Porcentaje de sacrificio (PS)
+  string tiempo_espera = 2; // tiempo de espera para enviar informacion (TE)
+}
+
+message Sacrificio {
+  string nombre = 1;
+  string atributo = 2;
+  string estado = 3; // "Sacrificado" o "No sacrificado"
+}
+
+message SacrificioResult {
+  string nodo = 1; // Nombre del nodo regional
+  repeated Sacrificio digimons = 2; // Lista de resultados de sacrificio
+  string mensaje_encriptado = 3;
+}

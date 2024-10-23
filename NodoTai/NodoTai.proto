@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package digimon;
+
+option go_package = "grpc-server/proto";
+
+service PrimarioService {
+  rpc Finalizar(Empty) returns (Senal);
+  rpc SolicitarDatos(Empty) returns (NumeroResponse);
+}
+
+service DiaboromonService {
+  rpc EnviarAtaque (Ataque) returns (Senal);
+}
+
+// Mensajes
+
+message Empty {}
+
+message Ataque {
+    int32 dano = 1;
+}
+
+message Senal {
+    int32 valor = 1;
+}
+
+message NumeroResponse {
+  double numero = 1; // Número flotante que envia el Primario a NodoTai
+}
+
+
+
+//Unnused
+
+message VidaRequest {
+  int32 vida = 1;
+}
+
+message AtaqueResponse {
+  string mensaje = 1;
+  int32 vida_restante = 2;
+}
