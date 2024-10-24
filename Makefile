@@ -10,6 +10,9 @@ tai:
 	sudo docker-compose up -d continentefolder nodotai
 	sudo docker attach nodotai
 
+stop:
+	sudo docker-compose stop
+
 down:
 	sudo docker-compose down
 
